@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Create from './components/create';
+import ExpenseIdentifier from './components/ExpenseIdentifier';
+import Header from './components/header';
+import TotalResults from './components/TotalResults';
+import ItemContextPoviter from './contexts/ItemContext';
+import ReferenceProvider from './contexts/ReferenceContext';
+import Visualize from './pages/visualize';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <ExpenseIdentifier />
+      <ItemContextPoviter>
+        <ReferenceProvider>
+          <TotalResults />
+          <Create />
+          <Visualize />
+        </ReferenceProvider>
+      </ItemContextPoviter>
     </div>
-  );
+  )
 }
-
-export default App;
