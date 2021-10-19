@@ -1,7 +1,7 @@
 import './App.css';
-import Create from './components/create';
+import Create from './components/Create';
 import ExpenseIdentifier from './components/ExpenseIdentifier';
-import Header from './components/header';
+import Header from './components/Header';
 import TotalResults from './components/TotalResults';
 import ItemContextPoviter from './contexts/ItemContext';
 import ReferenceProvider from './contexts/ReferenceContext';
