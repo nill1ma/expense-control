@@ -1,6 +1,6 @@
 import { faArrowAltCircleLeft, faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { useRegisterItem } from "../../contexts/ItemContext";
+import { useRegisterItems } from "../../contexts/ItemsContext";
 import { useReference } from "../../contexts/ReferenceContext";
 import { formatMonthAndYearToShow, getCurrentMonthAndYear } from "../../helpers/Dateutils";
 import { getCalculatedeMonataryValue } from "../../helpers/Results";
@@ -14,7 +14,7 @@ type TCalc = {
 export default function TotalResults() {
 
     const [calculatede, setCalculatede] = useState<TCalc[]>([] as TCalc[])
-    const { registerItem } = useRegisterItem()
+    const { registerItems } = useRegisterItems()
     const { reference, setReference } = useReference()
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export default function TotalResults() {
 
     useEffect(() => {
         calculate()
-    }, [reference, registerItem])
+    }, [reference, registerItems])
 
     const handleReference = (next: boolean) => {
         const [year, month] = reference.split(',')
@@ -33,7 +33,7 @@ export default function TotalResults() {
     }
 
     const calculate = () => {
-        const { noExpense, expense } = getCalculatedeMonataryValue(registerItem, reference)
+        const { noExpense, expense } = getCalculatedeMonataryValue(registerItems, reference)
         setCalculatede([
             { label: 'Receipt', value: Number(noExpense) },
             { label: 'Expenses', value: Number(expense) },

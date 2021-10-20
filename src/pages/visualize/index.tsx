@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react";
 import { faEdit, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRegisterItem } from "../../contexts/ItemContext";
+import { useRegisterItems } from "../../contexts/ItemsContext";
 import { useReference } from "../../contexts/ReferenceContext";
 import { InputValue } from "../../models/InputValue";
 import { removeItemfromRegisterItem } from "../../helpers/Results";
 import * as Styles from "./styles";
+import { useRegisterItem } from "../../contexts/ItemContext";
+import { useEditMode } from "../../contexts/EditMode";
 
 export default function Visualize() {
-    const { registerItem, setRegisterItem } = useRegisterItem()
+    const { registerItems, setRegisterItems } = useRegisterItems()
     const { reference } = useReference()
     const [items, setItems] = useState<InputValue[]>([] as InputValue[])
+    const { registerItem, setRegisterItem } = useRegisterItem()
+    const { setEditMode } = useEditMode()
 
     useEffect(() => {
-        setItems([...registerItem.filter((register: InputValue) => register.reference === reference)])
-    }, [reference, registerItem])
+        setItems([...registerItems.filter((register: InputValue) => register.reference === reference)])
+    }, [reference, registerItems])
 
     const removeItem = (id: number) => {
-        const updatedeRegisterItem = removeItemfromRegisterItem(registerItem, id)
-        setRegisterItem([...updatedeRegisterItem])
+        const updatedeRegisterItem = removeItemfromRegisterItem(registerItems, id)
+        setRegisterItems([...updatedeRegisterItem])
+    }
+
+    const fillFieldsToEditRegister = (id: number) => {
+        const register = registerItems.find(({ id: rId }: InputValue) => rId === id)
+        setEditMode(true)
+        setRegisterItem({ ...register })
     }
 
     return (
@@ -39,7 +49,7 @@ export default function Visualize() {
                                 {data.date}
                             </Styles.Td>
                             <Styles.Td>
-                                <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faEdit} />
+                                <FontAwesomeIcon onClick={() => fillFieldsToEditRegister(data.id)} style={{ cursor: 'pointer' }} icon={faEdit} />
                             </Styles.Td>
                             <Styles.Td>
                                 <FontAwesomeIcon onClick={() => removeItem(data.id)} style={{ cursor: 'pointer' }} icon={faTimesCircle} />

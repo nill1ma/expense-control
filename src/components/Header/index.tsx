@@ -17,7 +17,6 @@ export default function Header() {
         setInterval(() => {
             setTimer(getTime())
         }, 1000)
-        console.log(timer)
     }, [])
 
     return (

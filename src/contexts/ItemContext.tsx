@@ -1,6 +1,5 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { InputValue } from "../models/InputValue";
-import { usePersistedState } from "../persistense";
 
 type Props = {
     children: any
@@ -10,7 +9,7 @@ const ItemContext = createContext<any>({})
 
 export default function ItemContextPoviter(props: Props) {
     const { children } = props
-    const [registerItem, setRegisterItem] = usePersistedState<InputValue[]>('itemContext', [] as InputValue[])
+    const [registerItem, setRegisterItem] = useState<InputValue>({} as InputValue)
     return (
         <ItemContext.Provider value={{ registerItem, setRegisterItem }}>
             {children}

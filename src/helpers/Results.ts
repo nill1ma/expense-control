@@ -12,10 +12,9 @@ export const getCalculatedeMonataryValue = (registerItem: InputValue[], referenc
 
 const calculate = (currentReferenceItems: InputValue[], expense: boolean): Number => {
     return currentReferenceItems
-        .filter(({ isExpense }) => expense === isExpense)
+        .filter(({ isExpense }) => isExpense === expense)
         .reduce((acc: number, { value }) => acc + value, 0)
 }
-
 
 export const removeItemfromRegisterItem = (registerItem: InputValue[], id: number): InputValue[] => {
     const register = registerItem.filter((register: InputValue) => register.id !== id)
